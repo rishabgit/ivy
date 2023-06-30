@@ -1421,6 +1421,21 @@ class Tensor:
         ).ivy_array
         return self
 
+    def copy_(self, src, non_blocking=False):
+        self.ivy_array = src
+        return self
+
+    def zero_(self):
+        self.ivy_array = ivy.zeros_like(self)
+        return self
+
+    def uniform_(self, from_value=0, to=1):
+        self.ivy_array = ivy.astype(
+            ivy.random_uniform(low=from_value, high=to, shape=self.ivy_array.shape),
+            self.dtype,
+        )
+        return self
+
 
 class Size(tuple):
     def __new__(cls, iterable=()):
